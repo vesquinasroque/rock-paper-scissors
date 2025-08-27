@@ -1,72 +1,66 @@
 import random
+import sys
 
-continue_game = True
-first_step = True
-program_choice = random.randint(1, 3)
+program_score = 0
+player_score = 0
+ties = 0
 
-if program_choice == 1:
-    program_choice_value = "Rock"
+while True:
 
-elif program_choice == 2:
-    program_choice_value = "Paper"
+    # Computer choice
+    program_choice = random.randint(1, 3)
 
-else:
-    program_choice_value = "Scissors"
+    if program_choice == 1:
+        program_choice_value = "Rock"
 
-print(
-    f"(Debug): program_choice is {program_choice} and its value is {program_choice_value}"
-)
-
-while continue_game:
-    
-    #while first_step:
-
-        #try:
-    print(f"Enter a value between 1 and 3: 1 Rock, 2 Paper and 3 Scissors")
-    players_choice = int(input(">"))
-
-    if players_choice == 1:
-        players_choice_value = "Rock"
-        first_step = False
-
-    elif players_choice == 2:
-        players_choice_value = "Paper"
-        first_step = False
-
-    elif players_choice == 3:
-        players_choice_value = "Scissors"
-        first_step = False
+    elif program_choice == 2:
+        program_choice_value = "Paper"
 
     else:
-        print(f"Please select a valid value")
-                
-        # except ValueError:
-        #     print(f"Non numeric values are not allowed")
-        #     continue
-    
+        program_choice_value = "Scissors"
+
+    # Player input with validation
+    try:
+        print(f"Enter a value between 1 and 4: 1 Rock, 2 Paper, 3 Scissors and 4 Quit")
+        players_choice = int(input(">"))
+
+        if players_choice == 1:
+            players_choice_value = "Rock"
+
+        elif players_choice == 2:
+            players_choice_value = "Paper"
+
+        elif players_choice == 3:
+            players_choice_value = "Scissors"
+
+        elif players_choice == 4:
+            sys.exit()
+
+        else:
+            print(f"\nPlease select a valid value\n")
+
+    except ValueError:
+        print(f"\nNon numeric values are not allowed\n")
+        continue
+
+    # Show choices
     print(
-        f"The computer has chosen {program_choice_value} and you have chosen {players_choice_value}"
+        f"The program has chosen {program_choice_value} and you have chosen {players_choice_value}\n"
     )
-    
-    if program_choice == players_choice:
-        print(f"That's a tie!")
-        
-    elif program_choice == 1 and players_choice == 2:
-        print(f"You win!!")
-        
-    elif program_choice == 1 and players_choice == 3:
-        print(f"You lose!")
 
-    elif program_choice == 2 and players_choice == 1:
-        print(f"You lose!")
+    # Determine winner
+    if players_choice == program_choice:
+        print("It's a tie!")
+        ties += 1
+    elif (
+        (players_choice == 1 and program_choice == 3)
+        or (players_choice == 2 and program_choice == 1)
+        or (players_choice == 3 and program_choice == 2)
+    ):
+        print("You win!")
+        player_score += 1
+    else:
+        print("You lose!")
+        program_score += 1
 
-    elif program_choice == 2 and players_choice == 3:
-        print(f"You win!!")
-        
-    elif program_choice == 3 and players_choice == 1:
-        print(f"You win!!")
-
-    elif program_choice == 3 and players_choice == 2:
-        print(f"You lose!!")
-    
-
+    print(f"\nPlayer {player_score} --- Program {program_score} --- Ties {ties}\n")
